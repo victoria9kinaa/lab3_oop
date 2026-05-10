@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SharpBelkin")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+89d52468a31fcbd50c0dd6bec2d216a70880926e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0b7f62090c9a6041f9dd735402445d2124b43243")]
 [assembly: System.Reflection.AssemblyProductAttribute("SharpBelkin")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SharpBelkin")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SharedSharp")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e59d773468c9a999e42dc2b00f8ad20bcd5a5762")]
 [assembly: System.Reflection.AssemblyProductAttribute("SharedSharp")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SharedSharp")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
