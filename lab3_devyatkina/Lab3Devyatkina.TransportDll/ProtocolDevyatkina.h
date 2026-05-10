@@ -1,0 +1,11 @@
+#pragma once
+
+enum MessageTypesDevyatkina
+{
+	MT_START_DEVYATKINA = 1,
+	MT_STOP_DEVYATKINA = 2,
+	MT_INFO_DEVYATKINA = 3,
+	MT_DATA_DEVYATKINA = 4,
+	MT_ACK_DEVYATKINA = 5,
+};
+
