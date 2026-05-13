@@ -4,10 +4,10 @@
 #define NOMINMAX
 #define WIN32_LEAN_AND_MEAN
 
-// Include Windows headers first
-#include <windows.h>
+// Include Winsock before Windows to avoid winsock.h conflicts
 #include <winsock2.h>
 #include <ws2tcpip.h>
+#include <windows.h>
 
 #include <conio.h>
 #include <iostream>

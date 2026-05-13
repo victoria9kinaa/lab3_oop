@@ -1,5 +1,6 @@
 #pragma once
 
+// Keep Winsock before Windows to avoid winsock.h conflicts
 #include <winsock2.h>
 #include <ws2tcpip.h>
 #include <windows.h>
