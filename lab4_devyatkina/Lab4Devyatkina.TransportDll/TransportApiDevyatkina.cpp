@@ -4,6 +4,7 @@
 
 #include <combaseapi.h>
 #include <cwchar>
+#include <mutex>
 
 static SocketTransportDevyatkina g_clientTransportDevyatkina;
 static std::mutex g_clientStateMxDevyatkina;
@@ -12,7 +13,7 @@ static std::mutex g_receiveMxDevyatkina;
 
 int Devyatkina_Connect()
 {
-	lock_guard lg(g_clientStateMxDevyatkina);
+	std::lock_guard<std::mutex> lg(g_clientStateMxDevyatkina);
 	if (g_clientTransportDevyatkina.isConnected())
 		return 1;
 
@@ -34,7 +35,7 @@ int Devyatkina_Connect()
 
 void Devyatkina_Disconnect()
 {
-	lock_guard lg(g_clientStateMxDevyatkina);
+	std::lock_guard<std::mutex> lg(g_clientStateMxDevyatkina);
 	if (!g_clientTransportDevyatkina.isConnected())
 		return;
 
@@ -52,7 +53,7 @@ void Devyatkina_Disconnect()
 
 int Devyatkina_SendMessage(MsgStructDevyatkina msg)
 {
-	lock_guard lg(g_sendMxDevyatkina);
+	std::lock_guard<std::mutex> lg(g_sendMxDevyatkina);
 	if (!g_clientTransportDevyatkina.isConnected())
 		return 0;
 
@@ -75,7 +76,7 @@ BOOL Devyatkina_ReceiveMessage(MsgStructDevyatkina* msg)
 	if (!msg)
 		return FALSE;
 
-	lock_guard lg(g_receiveMxDevyatkina);
+	std::lock_guard<std::mutex> lg(g_receiveMxDevyatkina);
 	if (!g_clientTransportDevyatkina.isConnected())
 		return FALSE;
 
