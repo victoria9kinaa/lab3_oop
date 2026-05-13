@@ -1,0 +1,14 @@
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\bin\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.exe
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\bin\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.deps.json
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\bin\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.runtimeconfig.json
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\bin\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.dll
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\bin\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.pdb
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.GeneratedMSBuildEditorConfig.editorconfig
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.AssemblyInfoInputs.cache
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.AssemblyInfo.cs
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.csproj.CoreCompileInputs.cache
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.dll
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\refint\Lab4Devyatkina.Dialog.dll
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.pdb
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\Lab4Devyatkina.Dialog.genruntimeconfig.cache
+C:\Mac\Home\Desktop\lab3_workspace\lab3_devyatkina\Lab4Devyatkina.Dialog\obj\x64\Debug\net8.0-windows\ref\Lab4Devyatkina.Dialog.dll

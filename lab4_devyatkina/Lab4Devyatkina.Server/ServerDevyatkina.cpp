@@ -1,0 +1,325 @@
+#include "ServerDevyatkina.h"
+
+std::mutex ServerDevyatkina::m_mx;
+std::map<int, std::shared_ptr<SessionDevyatkina>> ServerDevyatkina::m_sessions;
+std::map<int, std::shared_ptr<tcp::socket>> ServerDevyatkina::m_clients;
+std::map<int, jthread> ServerDevyatkina::m_workers;
+std::shared_ptr<tcp::acceptor> ServerDevyatkina::m_acceptor;
+int ServerDevyatkina::m_nextClientId = 1;
+std::chrono::milliseconds ServerDevyatkina::m_timeout = std::chrono::seconds(20);
+
+ServerDevyatkina::ServerDevyatkina()
+{
+	try
+	{
+		m_acceptor = SocketTransportDevyatkina::listen(SocketTransportDevyatkina::SERVER_PORT);
+		if (!m_acceptor)
+		{
+			SafeWrite("server", "failed to create acceptor");
+			return;
+		}
+		SafeWrite("server", "acceptor created successfully");
+	}
+	catch (const std::exception& e)
+	{
+		SafeWrite("server", "acceptor creation failed:", e.what());
+	}
+	catch (...)
+	{
+		SafeWrite("server", "acceptor creation failed: unknown error");
+	}
+}
+
+void ServerDevyatkina::run()
+{
+	SafeWrite("server", "start");
+
+	std::jthread timeoutThread(&ServerDevyatkina::monitorTimeouts);
+
+	while (true)
+	{
+		try
+		{
+			auto socket = SocketTransportDevyatkina::accept(m_acceptor);
+			if (!socket)
+				continue;
+
+			int clientId = 0;
+			{
+				std::lock_guard<std::mutex> lg(m_mx);
+				clientId = m_nextClientId++;
+				auto session = std::make_shared<SessionDevyatkina>(clientId);
+				m_sessions[clientId] = session;
+				m_clients[clientId] = socket;
+				LocalTransportDevyatkina::setSession(clientId, session);
+				m_workers.try_emplace(clientId, &ServerDevyatkina::worker, clientId);
+			}
+
+			SafeWrite("session", clientId, "connected");
+			std::thread(&ServerDevyatkina::clientHandler, clientId, socket).detach();
+			broadcastSessions();
+		}
+		catch (const std::exception& e)
+		{
+			SafeWrite("server", "accept error:", e.what());
+			break;
+		}
+		catch (...)
+		{
+			SafeWrite("server", "accept error: unknown");
+			break;
+		}
+	}
+}
+
+void ServerDevyatkina::clientHandler(int clientId, std::shared_ptr<tcp::socket> socket)
+{
+	try
+	{
+		SocketTransportDevyatkina clientTransport(socket);
+		while (clientTransport.isConnected())
+		{
+			try
+			{
+				MessageDevyatkina msg = MessageDevyatkina::receiveMessage(clientTransport);
+				handleClientMessage(msg, clientId);
+			}
+			catch (...)
+			{
+				break;
+			}
+		}
+	}
+	catch (...)
+	{
+	}
+
+	removeClient(clientId, true);
+}
+
+void ServerDevyatkina::handleClientMessage(MessageDevyatkina& msg, int clientId)
+{
+	std::shared_ptr<SessionDevyatkina> session;
+	{
+		std::lock_guard<std::mutex> lg(m_mx);
+		auto it = m_sessions.find(clientId);
+		if (it != m_sessions.end())
+			session = it->second;
+	}
+	if (session)
+		session->updateActivity();
+
+	switch (msg.header.type)
+	{
+	case MT_CONNECT_DEVYATKINA:
+	{
+		std::shared_ptr<tcp::socket> socket;
+		{
+			std::lock_guard<std::mutex> lg(m_mx);
+			auto it = m_clients.find(clientId);
+			if (it != m_clients.end())
+				socket = it->second;
+		}
+		if (socket)
+		{
+			MessageDevyatkina confirm(MT_CONFIRM_DEVYATKINA, std::to_wstring(clientId), clientId, -2);
+			SocketTransportDevyatkina transport(socket);
+			confirm.send(transport);
+		}
+		broadcastSessions();
+		break;
+	}
+	case MT_DISCONNECT_DEVYATKINA:
+		removeClient(clientId, false);
+		break;
+	case MT_INFO_DEVYATKINA:
+		sendSessionsToClient(clientId);
+		break;
+	case MT_DATA_DEVYATKINA:
+	{
+		if (msg.header.to == -1)
+		{
+			std::lock_guard<std::mutex> lg(m_mx);
+			for (const auto& [id, s] : m_sessions)
+			{
+				if (id == clientId)
+					continue;
+				MessageDevyatkina out = msg;
+				out.header.from = clientId;
+				out.header.to = id;
+				LocalTransportDevyatkina().send(out);
+			}
+		}
+		else
+		{
+			std::lock_guard<std::mutex> lg(m_mx);
+			auto it = m_sessions.find(msg.header.to);
+			if (it != m_sessions.end())
+			{
+				MessageDevyatkina out = msg;
+				out.header.from = clientId;
+				LocalTransportDevyatkina().send(out);
+			}
+		}
+
+		sendSessionsToClient(clientId);
+		break;
+	}
+	}
+}
+
+void ServerDevyatkina::worker(int clientId)
+{
+	while (true)
+	{
+		MessageDevyatkina msg;
+		LocalTransportDevyatkina(clientId).receive(msg);
+		if (msg.header.type == MT_DISCONNECT_DEVYATKINA)
+			break;
+
+		std::shared_ptr<tcp::socket> socket;
+		{
+			std::lock_guard<std::mutex> lg(m_mx);
+			auto it = m_clients.find(clientId);
+			if (it != m_clients.end())
+				socket = it->second;
+		}
+		if (!socket)
+			break;
+
+		try
+		{
+			SocketTransportDevyatkina transport(socket);
+			msg.send(transport);
+		}
+		catch (...)
+		{
+			break;
+		}
+	}
+
+	{
+		std::lock_guard<std::mutex> lg(m_mx);
+		LocalTransportDevyatkina::eraseSession(clientId);
+		m_sessions.erase(clientId);
+		m_workers.erase(clientId);
+	}
+
+	broadcastSessions();
+}
+
+void ServerDevyatkina::sendSessionsToClient(int clientId)
+{
+	std::shared_ptr<tcp::socket> socket;
+	{
+		std::lock_guard<std::mutex> lg(m_mx);
+		auto it = m_clients.find(clientId);
+		if (it != m_clients.end())
+			socket = it->second;
+	}
+	if (!socket)
+		return;
+
+	MessageDevyatkina info(MT_INFO_DEVYATKINA, buildSessionsList(), clientId, -2);
+	try
+	{
+		SocketTransportDevyatkina transport(socket);
+		info.send(transport);
+	}
+	catch (...)
+	{
+	}
+}
+
+void ServerDevyatkina::broadcastSessions()
+{
+	std::vector<int> ids;
+	{
+		std::lock_guard<std::mutex> lg(m_mx);
+		for (const auto& [id, _] : m_clients)
+			ids.push_back(id);
+	}
+
+	for (int id : ids)
+		sendSessionsToClient(id);
+}
+
+std::wstring ServerDevyatkina::buildSessionsList()
+{
+	std::wstring result;
+	std::lock_guard<std::mutex> lg(m_mx);
+	for (const auto& [id, _] : m_sessions)
+	{
+		result += std::to_wstring(id);
+		result += L",";
+	}
+	return result;
+}
+
+void ServerDevyatkina::removeClient(int clientId, bool notifyClient)
+{
+	std::shared_ptr<SessionDevyatkina> session;
+	std::shared_ptr<tcp::socket> socket;
+
+	{
+		std::lock_guard<std::mutex> lg(m_mx);
+		auto itSession = m_sessions.find(clientId);
+		if (itSession != m_sessions.end())
+			session = itSession->second;
+
+		auto itSocket = m_clients.find(clientId);
+		if (itSocket != m_clients.end())
+			socket = itSocket->second;
+		m_clients.erase(clientId);
+	}
+
+	if (session)
+	{
+		MessageDevyatkina stop(MT_DISCONNECT_DEVYATKINA, L"", clientId, -2);
+		session->addMessage(stop);
+	}
+
+	if (socket && notifyClient)
+	{
+		try
+		{
+			SocketTransportDevyatkina transport(socket);
+			MessageDevyatkina notify(MT_DISCONNECT_DEVYATKINA, L"", clientId, -2);
+			notify.send(transport);
+		}
+		catch (...)
+		{
+		}
+	}
+
+	if (socket)
+	{
+		boost::system::error_code ec;
+		socket->close(ec);
+	}
+}
+
+void ServerDevyatkina::monitorTimeouts()
+{
+	while (true)
+	{
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+
+		std::vector<int> timedOut;
+		{
+			std::lock_guard<std::mutex> lg(m_mx);
+			for (const auto& [id, session] : m_sessions)
+			{
+				if (session && session->isTimedOut(m_timeout))
+					timedOut.push_back(id);
+			}
+		}
+
+		for (int id : timedOut)
+		{
+			SafeWrite("server", "client timed out", id);
+			removeClient(id, true);
+		}
+	}
+}
+

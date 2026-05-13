@@ -1,0 +1,11 @@
+#pragma once
+
+enum MessageTypesDevyatkina
+{
+	MT_CONNECT_DEVYATKINA = 1,
+	MT_DISCONNECT_DEVYATKINA = 2,
+	MT_INFO_DEVYATKINA = 3,
+	MT_DATA_DEVYATKINA = 4,
+	MT_CONFIRM_DEVYATKINA = 5
+};
+
