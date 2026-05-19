@@ -84,7 +84,7 @@ void ServerDevyatkina::handleClientMessage(MessageDevyatkina& msg, int clientId)
         if (session)
         {
             MessageDevyatkina confirm(MT_CONFIRM_DEVYATKINA, std::to_wstring(clientId), clientId, -2);
-            session->addMessage(confirm);   // ← через очередь сессии
+            session->addMessage(confirm);
         }
         broadcastSessions();
         break;
@@ -102,7 +102,6 @@ void ServerDevyatkina::handleClientMessage(MessageDevyatkina& msg, int clientId)
     {
         if (msg.header.to == -1)
         {
-            // Отправить всем кроме отправителя
             std::vector<int> ids;
             {
                 std::lock_guard<std::recursive_mutex> lg(m_mx);
@@ -119,7 +118,6 @@ void ServerDevyatkina::handleClientMessage(MessageDevyatkina& msg, int clientId)
         }
         else
         {
-            // Отправить конкретному
             bool exists = false;
             {
                 std::lock_guard<std::recursive_mutex> lg(m_mx);
@@ -165,7 +163,6 @@ void ServerDevyatkina::worker(int clientId)
         catch (...) { break; }
     }
 
-    
     SafeWrite("session", clientId, "worker finished");
 }
 
@@ -175,7 +172,7 @@ void ServerDevyatkina::sendSessionsToClient(int clientId)
     if (!session) return;
 
     MessageDevyatkina info(MT_INFO_DEVYATKINA, buildSessionsList(), clientId, -2);
-    session->addMessage(info);   // ← через очередь сессии
+    session->addMessage(info);
 }
 
 void ServerDevyatkina::broadcastSessions()
@@ -221,7 +218,6 @@ void ServerDevyatkina::removeClient(int clientId, bool notifyClient)
         m_sessions.erase(clientId);
         LocalTransportDevyatkina::eraseSession(clientId);
 
-        // Отпускаем поток-воркер не дожидаясь его завершения
         auto itWorker = m_workers.find(clientId);
         if (itWorker != m_workers.end())
         {

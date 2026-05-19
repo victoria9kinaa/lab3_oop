@@ -17,13 +17,20 @@ namespace Lab4Devyatkina.Dialog
 		private readonly TextBox incomingBox = new() { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical };
 		private readonly ComboBox recipientsBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 250 };
 		private readonly CheckBox connectedCheck = new() { Text = "Connected", AutoSize = true, Enabled = false };
-		private readonly Label clientLabel = new() { AutoSize = true };
+		//private readonly Label clientLabel = new() { AutoSize = true };
+        private readonly Label clientLabel = new()
+        {
+            AutoSize = true,
+            ForeColor = Color.Red,        // Сделаем ярко-красным
+            Font = new Font("Arial", 12, FontStyle.Bold) // Увеличим и сделаем жирным
+        };
 
-		private Thread? receiveThread;
+        private Thread? receiveThread;
 		private volatile bool isConnected;
 		private readonly List<int> recipientIds = new();
+        private string? myClientId = null;
 
-		public MainFormDevyatkina()
+        public MainFormDevyatkina()
 		{
 			Text = "Lab4 Devyatkina";
 			FormBorderStyle = FormBorderStyle.Sizable;
@@ -53,8 +60,9 @@ namespace Lab4Devyatkina.Dialog
 			disconnectBtn.Location = new Point(480, 250);
 
 			lblClient.Location = new Point(360, 310);
-			clientLabel.Location = new Point(430, 310);
-			connectedCheck.Location = new Point(360, 340);
+            //clientLabel.Location = new Point(450, 310);
+            clientLabel.Location = new Point(lblClient.Right + 5, lblClient.Top);
+            connectedCheck.Location = new Point(360, 340);
 
 			Controls.Add(lblIncoming);
 			Controls.Add(incomingBox);
@@ -172,17 +180,20 @@ namespace Lab4Devyatkina.Dialog
 
 			while (TransportDllDevyatkina.Devyatkina_ReceiveMessage(ref msg))
 			{
-				switch (msg.msgType)
+                System.Diagnostics.Debug.WriteLine($"[DEBUG] Received: Type={msg.msgType}, Data='{msg.data}'");
+
+                switch (msg.msgType)
 				{
-					case MessageTypesDevyatkina.MT_CONFIRM_DEVYATKINA:
-						SafeUi(() =>
-						{
-							isConnected = true;
-							clientLabel.Text = msg.data;
-							UpdateControls();
-						});
-						break;
-					case MessageTypesDevyatkina.MT_INFO_DEVYATKINA:
+                    case MessageTypesDevyatkina.MT_CONFIRM_DEVYATKINA:
+                        myClientId = msg.data;
+                        SafeUi(() =>
+                        {
+                            isConnected = true;
+                            clientLabel.Text = myClientId;
+                            UpdateControls();
+                        });
+                        break;
+                    case MessageTypesDevyatkina.MT_INFO_DEVYATKINA:
 						SafeUi(() => UpdateRecipients(msg.data));
 						break;
 					case MessageTypesDevyatkina.MT_DATA_DEVYATKINA:
@@ -201,35 +212,44 @@ namespace Lab4Devyatkina.Dialog
 			SafeUi(HandleDisconnect);
 		}
 
-		private void UpdateRecipients(string data)
-		{
-			recipientIds.Clear();
-			recipientsBox.Items.Clear();
+        private void UpdateRecipients(string data)
+        {
+            recipientIds.Clear();
+            recipientsBox.Items.Clear();
 
-			var ids = data.Split(',', StringSplitOptions.RemoveEmptyEntries)
-				.Select(s => int.TryParse(s, out var id) ? id : -1)
-				.Where(id => id >= 0)
-				.ToList();
+            var ids = data.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => int.TryParse(s, out var id) ? id : -1)
+                .Where(id => id >= 0)
+                .ToList();
 
-			recipientIds.AddRange(ids);
-			recipientsBox.Items.Add("All clients");
-			foreach (var id in recipientIds)
-				recipientsBox.Items.Add($"Client {id}");
+            recipientIds.AddRange(ids);
+            recipientsBox.Items.Add("All clients");
+            foreach (var id in recipientIds)
+                recipientsBox.Items.Add($"Client {id}");
 
-			if (recipientsBox.Items.Count > 0)
-				recipientsBox.SelectedIndex = 0;
-		}
+            // Устанавливаем выбор и восстанавливаем ID в одну логическую группу
+            if (recipientsBox.Items.Count > 0)
+                recipientsBox.SelectedIndex = 0;
 
-		private void HandleDisconnect()
-		{
-			isConnected = false;
-			clientLabel.Text = string.Empty;
-			recipientIds.Clear();
-			recipientsBox.Items.Clear();
-			UpdateControls();
-		}
+            // "Железная" страховка: восстанавливаем ID после перерисовки
+            if (myClientId != null)
+            {
+                clientLabel.Text = myClientId;
+            }
+        }
 
-		private void HeartbeatLoop()
+        private void HandleDisconnect()
+        {
+            isConnected = false;
+            // ЛОГ ДЛЯ ОТЛАДКИ: Посмотрим, кто именно вызывает очистку
+            System.Diagnostics.Debug.WriteLine("[DEBUG] HandleDisconnect called! Clearing ID.");
+            clientLabel.Text = string.Empty;
+            recipientIds.Clear();
+            recipientsBox.Items.Clear();
+            UpdateControls();
+        }
+
+        private void HeartbeatLoop()
 		{
 			while (isConnected)
 			{
@@ -254,8 +274,8 @@ namespace Lab4Devyatkina.Dialog
 		private void SafeUi(Action action)
 		{
 			if (InvokeRequired)
-				BeginInvoke(action);
-			else
+                Invoke(action);
+            else
 				action();
 		}
 	}
