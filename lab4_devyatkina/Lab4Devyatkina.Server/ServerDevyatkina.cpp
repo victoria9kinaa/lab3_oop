@@ -80,17 +80,11 @@ void ServerDevyatkina::handleClientMessage(MessageDevyatkina& msg, int clientId)
     {
     case MT_CONNECT_DEVYATKINA:
     {
-        std::shared_ptr<tcp::socket> socket;
-        {
-            std::lock_guard<std::recursive_mutex> lg(m_mx);
-            auto it = m_clients.find(clientId);
-            if (it != m_clients.end()) socket = it->second;
-        }
-        if (socket)
+        auto session = LocalTransportDevyatkina::getSession(clientId);
+        if (session)
         {
             MessageDevyatkina confirm(MT_CONFIRM_DEVYATKINA, std::to_wstring(clientId), clientId, -2);
-            SocketTransportDevyatkina transport(socket);
-            confirm.send(transport);
+            session->addMessage(confirm);   // ← через очередь сессии
         }
         broadcastSessions();
         break;
@@ -171,27 +165,17 @@ void ServerDevyatkina::worker(int clientId)
         catch (...) { break; }
     }
 
-    // НЕ делаем erase здесь — removeClient уже всё почистил
+    
     SafeWrite("session", clientId, "worker finished");
 }
 
 void ServerDevyatkina::sendSessionsToClient(int clientId)
 {
-    std::shared_ptr<tcp::socket> socket;
-    {
-        std::lock_guard<std::recursive_mutex> lg(m_mx);
-        auto it = m_clients.find(clientId);
-        if (it != m_clients.end()) socket = it->second;
-    }
-    if (!socket) return;
+    auto session = LocalTransportDevyatkina::getSession(clientId);
+    if (!session) return;
 
     MessageDevyatkina info(MT_INFO_DEVYATKINA, buildSessionsList(), clientId, -2);
-    try
-    {
-        SocketTransportDevyatkina transport(socket);
-        info.send(transport);
-    }
-    catch (...) {}
+    session->addMessage(info);   // ← через очередь сессии
 }
 
 void ServerDevyatkina::broadcastSessions()
