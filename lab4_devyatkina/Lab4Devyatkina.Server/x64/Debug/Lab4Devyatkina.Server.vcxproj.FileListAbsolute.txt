@@ -1,5 +1,0 @@
-C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\x64\Debug\Lab4Devyatkina.Dialog.deps.json
-C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\x64\Debug\Lab4Devyatkina.Dialog.runtimeconfig.json
-C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\x64\Debug\Lab4Devyatkina.Dialog.exe
-C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.Server\x64\Debug\Lab4Devyatkina.Server.vcxproj.AssemblyReference.cache
-C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.Server\x64\Debug\Lab4Devy.F0D66F53.Up2Date

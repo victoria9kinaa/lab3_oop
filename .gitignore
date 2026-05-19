@@ -1,2 +1,11 @@
-﻿.vs/
-.DS_Store
+﻿bin/
+obj/
+x64/
+.vs/
+*.exe
+*.dll
+*.pdb
+*.cache
+*.user
+*.slnLaunch.user
+enc_temp_folder/

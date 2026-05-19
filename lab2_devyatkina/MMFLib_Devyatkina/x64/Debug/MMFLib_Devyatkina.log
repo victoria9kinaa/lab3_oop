@@ -1,9 +1,0 @@
-﻿  ExportApiDevyatkina.cpp
-  HeaderDevyatkina.cpp
-  ITransportDevyatkina.cpp
-  MMFTransportDevyatkina.cpp
-  MessageDevyatkina.cpp
-  Generating Code...
-  LINK : C:\Mac\Home\Desktop\lab2_devyatkina\x64\Debug\MMFLib_Devyatkina.dll not found or not built by the last incremental link; performing full link
-     Creating library C:\Mac\Home\Desktop\lab2_devyatkina\x64\Debug\MMFLib_Devyatkina.lib and object C:\Mac\Home\Desktop\lab2_devyatkina\x64\Debug\MMFLib_Devyatkina.exp
-  MMFLib_Devyatkina.vcxproj -> C:\Mac\Home\Desktop\lab2_devyatkina\x64\Debug\MMFLib_Devyatkina.dll
