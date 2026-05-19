@@ -206,6 +206,8 @@ void ServerDevyatkina::removeClient(int clientId, bool notifyClient)
 
     {
         std::lock_guard<std::recursive_mutex> lg(m_mx);
+        if (m_clients.find(clientId) == m_clients.end())
+            return;
         auto itSession = m_sessions.find(clientId);
         if (itSession != m_sessions.end())
             session = itSession->second;
