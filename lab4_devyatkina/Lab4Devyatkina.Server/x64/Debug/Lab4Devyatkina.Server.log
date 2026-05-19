@@ -1,0 +1,126 @@
+﻿  ServerDevyatkina.cpp
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\MessageDevyatkina.h(12,15): warning C4251: 'MessageDevyatkina::data': 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>' needs to have dll-interface to be used by clients of 'MessageDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\xstring(589,7):
+      see declaration of 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(13,35): warning C4251: 'SessionDevyatkina::m_messages': 'std::queue<MessageDevyatkina,std::deque<MessageDevyatkina,std::allocator<MessageDevyatkina>>>' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\queue(34,7):
+      see declaration of 'std::queue<MessageDevyatkina,std::deque<MessageDevyatkina,std::allocator<MessageDevyatkina>>>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(14,16): warning C4251: 'SessionDevyatkina::m_mx': 'std::mutex' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(98,19):
+      see declaration of 'std::mutex'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(15,29): warning C4251: 'SessionDevyatkina::m_ev': 'std::condition_variable' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(523,19):
+      see declaration of 'std::condition_variable'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(16,43): warning C4251: 'SessionDevyatkina::m_lastRequest': 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\__msvc_chrono.hpp(200,11):
+      see declaration of 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(17,23): warning C4251: 'SessionDevyatkina::m_stopped': 'std::atomic<bool>' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\atomic(2115,8):
+      see declaration of 'std::atomic<bool>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\LocalTransportDevyatkina.h(17,59): warning C4251: 'LocalTransportDevyatkina::sessions': 'std::map<int,std::shared_ptr<SessionDevyatkina>,std::less<int>,std::allocator<std::pair<const int,std::shared_ptr<SessionDevyatkina>>>>' needs to have dll-interface to be used by clients of 'LocalTransportDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\map(72,7):
+      see declaration of 'std::map<int,std::shared_ptr<SessionDevyatkina>,std::less<int>,std::allocator<std::pair<const int,std::shared_ptr<SessionDevyatkina>>>>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\LocalTransportDevyatkina.h(18,20): warning C4251: 'LocalTransportDevyatkina::mx': 'std::mutex' needs to have dll-interface to be used by clients of 'LocalTransportDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(98,19):
+      see declaration of 'std::mutex'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(43,27): warning C4251: 'SocketTransportDevyatkina::mx': 'std::mutex' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(98,19):
+      see declaration of 'std::mutex'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(44,40): warning C4251: 'SocketTransportDevyatkina::server_io': 'boost::asio::io_context' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\vcpkg\installed\x64-windows\include\boost\asio\io_context.hpp(192,7):
+      see declaration of 'boost::asio::io_context'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(46,26): warning C4251: 'SocketTransportDevyatkina::client_io': 'boost::asio::io_context' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\vcpkg\installed\x64-windows\include\boost\asio\io_context.hpp(192,7):
+      see declaration of 'boost::asio::io_context'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(47,31): warning C4251: 'SocketTransportDevyatkina::m_socket': 'std::shared_ptr<boost::asio::ip::tcp::socket>' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'ServerDevyatkina.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\memory(1588,7):
+      see declaration of 'std::shared_ptr<boost::asio::ip::tcp::socket>'
+  
+  main.cpp
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\MessageDevyatkina.h(12,15): warning C4251: 'MessageDevyatkina::data': 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>' needs to have dll-interface to be used by clients of 'MessageDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\xstring(589,7):
+      see declaration of 'std::basic_string<wchar_t,std::char_traits<wchar_t>,std::allocator<wchar_t>>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(13,35): warning C4251: 'SessionDevyatkina::m_messages': 'std::queue<MessageDevyatkina,std::deque<MessageDevyatkina,std::allocator<MessageDevyatkina>>>' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\queue(34,7):
+      see declaration of 'std::queue<MessageDevyatkina,std::deque<MessageDevyatkina,std::allocator<MessageDevyatkina>>>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(14,16): warning C4251: 'SessionDevyatkina::m_mx': 'std::mutex' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(98,19):
+      see declaration of 'std::mutex'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(15,29): warning C4251: 'SessionDevyatkina::m_ev': 'std::condition_variable' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(523,19):
+      see declaration of 'std::condition_variable'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(16,43): warning C4251: 'SessionDevyatkina::m_lastRequest': 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\__msvc_chrono.hpp(200,11):
+      see declaration of 'std::chrono::time_point<std::chrono::steady_clock,std::chrono::nanoseconds>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SessionDevyatkina.h(17,23): warning C4251: 'SessionDevyatkina::m_stopped': 'std::atomic<bool>' needs to have dll-interface to be used by clients of 'SessionDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\atomic(2115,8):
+      see declaration of 'std::atomic<bool>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\LocalTransportDevyatkina.h(17,59): warning C4251: 'LocalTransportDevyatkina::sessions': 'std::map<int,std::shared_ptr<SessionDevyatkina>,std::less<int>,std::allocator<std::pair<const int,std::shared_ptr<SessionDevyatkina>>>>' needs to have dll-interface to be used by clients of 'LocalTransportDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\map(72,7):
+      see declaration of 'std::map<int,std::shared_ptr<SessionDevyatkina>,std::less<int>,std::allocator<std::pair<const int,std::shared_ptr<SessionDevyatkina>>>>'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\LocalTransportDevyatkina.h(18,20): warning C4251: 'LocalTransportDevyatkina::mx': 'std::mutex' needs to have dll-interface to be used by clients of 'LocalTransportDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(98,19):
+      see declaration of 'std::mutex'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(43,27): warning C4251: 'SocketTransportDevyatkina::mx': 'std::mutex' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\mutex(98,19):
+      see declaration of 'std::mutex'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(44,40): warning C4251: 'SocketTransportDevyatkina::server_io': 'boost::asio::io_context' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\vcpkg\installed\x64-windows\include\boost\asio\io_context.hpp(192,7):
+      see declaration of 'boost::asio::io_context'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(46,26): warning C4251: 'SocketTransportDevyatkina::client_io': 'boost::asio::io_context' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\vcpkg\installed\x64-windows\include\boost\asio\io_context.hpp(192,7):
+      see declaration of 'boost::asio::io_context'
+  
+C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\Lab4Devyatkina.TransportDll\SocketTransportDevyatkina.h(47,31): warning C4251: 'SocketTransportDevyatkina::m_socket': 'std::shared_ptr<boost::asio::ip::tcp::socket>' needs to have dll-interface to be used by clients of 'SocketTransportDevyatkina'
+  (compiling source file 'main.cpp')
+      C:\Program Files\Microsoft Visual Studio\18\Community\VC\Tools\MSVC\14.50.35717\include\memory(1588,7):
+      see declaration of 'std::shared_ptr<boost::asio::ip::tcp::socket>'
+  
+  Generating Code...
+  Lab4Devyatkina.Server.vcxproj -> C:\Mac\Home\Desktop\lab3_oop\lab4_devyatkina\x64\Debug\Lab4Devyatkina.Server.exe
+  'pwsh.exe' is not recognized as an internal or external command,
+  operable program or batch file.

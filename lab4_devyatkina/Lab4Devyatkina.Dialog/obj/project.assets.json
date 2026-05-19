@@ -1,11 +1,29 @@
 {
   "version": 3,
   "targets": {
-    "net8.0-windows7.0": {}
+    "net8.0-windows7.0": {
+      "Lab4Devyatkina.TransportDll/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/Lab4Devyatkina.TransportDll.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Lab4Devyatkina.TransportDll.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "Lab4Devyatkina.TransportDll/1.0.0": {
+      "type": "project",
+      "path": "../Lab4Devyatkina.TransportDll/Lab4Devyatkina.TransportDll.vcxproj",
+      "msbuildProject": "../Lab4Devyatkina.TransportDll/Lab4Devyatkina.TransportDll.vcxproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0-windows7.0": []
+    "net8.0-windows7.0": [
+      "Lab4Devyatkina.TransportDll >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\viktoriadevatkina\\.nuget\\packages\\": {}
@@ -13,11 +31,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Mac\\Home\\Desktop\\lab3_workspace\\lab3_devyatkina\\Lab4Devyatkina.Dialog\\Lab4Devyatkina.Dialog.csproj",
+      "projectUniqueName": "C:\\Mac\\Home\\Desktop\\lab3_oop\\lab4_devyatkina\\Lab4Devyatkina.Dialog\\Lab4Devyatkina.Dialog.csproj",
       "projectName": "Lab4Devyatkina.Dialog",
-      "projectPath": "C:\\Mac\\Home\\Desktop\\lab3_workspace\\lab3_devyatkina\\Lab4Devyatkina.Dialog\\Lab4Devyatkina.Dialog.csproj",
+      "projectPath": "C:\\Mac\\Home\\Desktop\\lab3_oop\\lab4_devyatkina\\Lab4Devyatkina.Dialog\\Lab4Devyatkina.Dialog.csproj",
       "packagesPath": "C:\\Users\\viktoriadevatkina\\.nuget\\packages\\",
-      "outputPath": "C:\\Mac\\Home\\Desktop\\lab3_workspace\\lab3_devyatkina\\Lab4Devyatkina.Dialog\\obj\\",
+      "outputPath": "C:\\Mac\\Home\\Desktop\\lab3_oop\\lab4_devyatkina\\Lab4Devyatkina.Dialog\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\viktoriadevatkina\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -33,7 +51,11 @@
       "frameworks": {
         "net8.0-windows7.0": {
           "targetAlias": "net8.0-windows",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Mac\\Home\\Desktop\\lab3_oop\\lab4_devyatkina\\Lab4Devyatkina.TransportDll\\Lab4Devyatkina.TransportDll.vcxproj": {
+              "projectPath": "C:\\Mac\\Home\\Desktop\\lab3_oop\\lab4_devyatkina\\Lab4Devyatkina.TransportDll\\Lab4Devyatkina.TransportDll.vcxproj"
+            }
+          }
         }
       },
       "warningProperties": {

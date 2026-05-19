@@ -20,13 +20,12 @@
 
 class ServerDevyatkina
 {
-	static std::mutex m_mx;
+	static std::recursive_mutex m_mx;
 	static std::map<int, std::shared_ptr<SessionDevyatkina>> m_sessions;
 	static std::map<int, std::shared_ptr<tcp::socket>> m_clients;
 	static std::map<int, jthread> m_workers;
 	static std::shared_ptr<tcp::acceptor> m_acceptor;
 	static int m_nextClientId;
-	static std::chrono::milliseconds m_timeout;
 
 	static void worker(int clientId);
 	static void clientHandler(int clientId, std::shared_ptr<tcp::socket> socket);
@@ -35,7 +34,6 @@ class ServerDevyatkina
 	static void broadcastSessions();
 	static std::wstring buildSessionsList();
 	static void removeClient(int clientId, bool notifyClient);
-	static void monitorTimeouts();
 
 public:
 	ServerDevyatkina();

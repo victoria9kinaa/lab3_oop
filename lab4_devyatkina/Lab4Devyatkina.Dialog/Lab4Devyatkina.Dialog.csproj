@@ -9,5 +9,9 @@
     <Platforms>x64</Platforms>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lab4Devyatkina.TransportDll\Lab4Devyatkina.TransportDll.vcxproj" />
+  </ItemGroup>
+
 </Project>
 

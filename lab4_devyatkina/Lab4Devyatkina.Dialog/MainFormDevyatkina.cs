@@ -15,7 +15,7 @@ namespace Lab4Devyatkina.Dialog
 
 		private readonly TextBox outgoingBox = new() { Multiline = true, Height = 90, Width = 320 };
 		private readonly TextBox incomingBox = new() { Multiline = true, ReadOnly = true, ScrollBars = ScrollBars.Vertical };
-		private readonly ComboBox recipientsBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 200 };
+		private readonly ComboBox recipientsBox = new() { DropDownStyle = ComboBoxStyle.DropDownList, Width = 250 };
 		private readonly CheckBox connectedCheck = new() { Text = "Connected", AutoSize = true, Enabled = false };
 		private readonly Label clientLabel = new() { AutoSize = true };
 
@@ -227,6 +227,18 @@ namespace Lab4Devyatkina.Dialog
 			recipientIds.Clear();
 			recipientsBox.Items.Clear();
 			UpdateControls();
+		}
+
+		private void HeartbeatLoop()
+		{
+			while (isConnected)
+			{
+				Thread.Sleep(10000); // Send heartbeat every 10 seconds
+				if (isConnected)
+				{
+					SendControlMessage(MessageTypesDevyatkina.MT_INFO_DEVYATKINA);
+				}
+			}
 		}
 
 		private void UpdateControls()

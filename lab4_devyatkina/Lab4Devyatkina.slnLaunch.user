@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Lab4Devyatkina.Server\\Lab4Devyatkina.Server.vcxproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Lab4Devyatkina.Dialog\\Lab4Devyatkina.Dialog.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
