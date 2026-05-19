@@ -1,4 +1,5 @@
 #include "ServerDevyatkina.h"
+#include "../Lab4Devyatkina.TransportDll/BrokerTransportDevyatkina.h"
 
 std::recursive_mutex ServerDevyatkina::m_mx;
 std::map<int, std::shared_ptr<SessionDevyatkina>> ServerDevyatkina::m_sessions;
@@ -100,36 +101,13 @@ void ServerDevyatkina::handleClientMessage(MessageDevyatkina& msg, int clientId)
 
     case MT_DATA_DEVYATKINA:
     {
-        if (msg.header.to == -1)
-        {
-            std::vector<int> ids;
-            {
-                std::lock_guard<std::recursive_mutex> lg(m_mx);
-                for (const auto& [id, _] : m_sessions)
-                    if (id != clientId) ids.push_back(id);
-            }
-            for (int id : ids)
-            {
-                MessageDevyatkina out = msg;
-                out.header.from = clientId;
-                out.header.to = id;
-                LocalTransportDevyatkina(id).send(out);
-            }
-        }
-        else
-        {
-            bool exists = false;
-            {
-                std::lock_guard<std::recursive_mutex> lg(m_mx);
-                exists = m_sessions.count(msg.header.to) > 0;
-            }
-            if (exists)
-            {
-                MessageDevyatkina out = msg;
-                out.header.from = clientId;
-                LocalTransportDevyatkina(out.header.to).send(out);
-            }
-        }
+        MessageDevyatkina out = msg;
+        out.header.from = clientId; // Указываем, кто отправитель
+
+        // Вся магия теперь внутри Брокера
+        BrokerTransportDevyatkina().send(out);
+
+        // Обновляем список для отправителя
         sendSessionsToClient(clientId);
         break;
     }

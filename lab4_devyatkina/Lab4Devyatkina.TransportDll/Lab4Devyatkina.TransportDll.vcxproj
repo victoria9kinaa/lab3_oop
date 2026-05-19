@@ -77,7 +77,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dllmain.cpp" />
-    <ClCompile Include="BrokerTransportDevyatkina.cpp" />
     <ClCompile Include="LocalTransportDevyatkina.cpp" />
     <ClCompile Include="MMFTransportDevyatkina.cpp" />
     <ClCompile Include="MessageDevyatkina.cpp" />
